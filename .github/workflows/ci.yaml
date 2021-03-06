@@ -21,7 +21,7 @@ jobs:
       - name: Build server image
         run:  docker build . -t app
       - name: Run Server in a container
-        run:  docker run -p 8080:8080 app
+        run:  docker run -d -p 8080:8080 app
       - name: Run App.js and execute Tests
         run:  npm run test
       - name: SonarCloud Scan
