@@ -1,4 +1,4 @@
-name: ci-sonarcloud
+name: ci-nodejs-sonarcloud
 on:
   pull_request:
     branches:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
+      - uses: actions/setup-node@v1
         with:
           node-version: 14
       - name: Install dependencies
@@ -18,8 +18,12 @@ jobs:
         run:  sudo npm install -g jest
       - name: Install Mocha and Chai
         run: sudo npm install mocha chai --save-dev
+      - name: Build server image
+        run:  docker build . -t app
+      - name: Run Server in a container
+        run:  docker run -p 8080:8080 app
       - name: Run App.js and execute Tests
-        run:  node app.js && npm run test
+        run:  npm run test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
