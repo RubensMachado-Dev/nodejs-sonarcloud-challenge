@@ -18,7 +18,7 @@ jobs:
       run:  sudo npm install -g jest
     - name: Install Mocha and Chai
       run: sudo npm install mocha chai --save-dev
-    - name: Run Tests
+    - name: Run App and Tests
       run:  node app.js && npm run test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
